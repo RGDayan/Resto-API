@@ -19,7 +19,6 @@ public class Card {
     @JsonView(ProductView.Index.class)
     private Long id;
 
-
     @Column(nullable = false)
     @JsonView(ProductView.Index.class)
     private String title;

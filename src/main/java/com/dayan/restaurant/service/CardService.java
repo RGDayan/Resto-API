@@ -25,7 +25,7 @@ public class CardService {
 
     public List<Card> getCards(){
         List<Card> cards = (List<Card>)cardRepository.findAll();
-        if (cards.size() == 0)
+        if (cards.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attention : aucune carte n'a été trouvée.");
         return cards;
     }
