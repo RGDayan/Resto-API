@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +19,22 @@ public class Card {
     @JsonView(ProductView.Index.class)
     private Long id;
 
+
     @Column(nullable = false)
     @JsonView(ProductView.Index.class)
-    private String type = "midi";
+    private String title;
+
+    @Column(nullable = false)
+    @JsonView(ProductView.Index.class)
+    private String type;
+
+    @Column(name = "opening_time")
+    @JsonView(ProductView.Index.class)
+    private Time openingTime;
+
+    @Column(name = "closing_time")
+    @JsonView(ProductView.Index.class)
+    private Time closingTime;
 
     @OneToMany(mappedBy = "card")
     @JsonIgnoreProperties("card")
