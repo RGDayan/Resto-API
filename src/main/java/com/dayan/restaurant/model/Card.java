@@ -35,6 +35,9 @@ public class Card {
     @JsonView(ProductView.Index.class)
     private Time closingTime;
 
+    @Column(name = "is_deleted", columnDefinition = "BOOLEAN")
+    private Boolean isDeleted = false;
+
     @OneToMany(mappedBy = "card")
     @JsonIgnoreProperties("card")
     private List<Service> services = new ArrayList<>();

@@ -5,6 +5,7 @@ import com.dayan.restaurant.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,14 @@ public class CardController {
 
     @GetMapping("/cards")
     public Iterable<Card> getCards(){
-        return cardService.getCards();
+        Iterable<Card> cards = cardService.getCards();
+        List<Card> existingCards = new ArrayList<>();
+        for (Card card :
+                cards) {
+            if (!card.getIsDeleted())
+                existingCards.add(card);
+        }
+        return existingCards;
     }
 
     @GetMapping("/cards/types")
@@ -31,5 +39,10 @@ public class CardController {
     @PostMapping("/cards")
     public Card postCard(@RequestBody Card card) {
         return cardService.saveCard(card);
+    }
+
+    @DeleteMapping("/cards/{id}")
+    public Card deleteCard(@PathVariable("id") Long id){
+        return cardService.deleteCard(id);
     }
 }

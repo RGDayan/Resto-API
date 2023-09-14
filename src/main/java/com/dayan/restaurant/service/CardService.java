@@ -20,7 +20,11 @@ public class CardService {
     private CardRepository cardRepository;
 
     public Optional<Card> getCard(final Long id) {
-        return cardRepository.findById(id);
+        Optional<Card> card = cardRepository.findById(id);
+        if (card.isPresent() && !card.get().getIsDeleted())
+            return card;
+        else
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Erreur : enregistrement supprimé");
     }
 
     public List<Card> getCards(){
@@ -30,8 +34,16 @@ public class CardService {
         return cards;
     }
 
-    public void deleteCard(final Long id){
-        cardRepository.deleteById(id);
+    public Card deleteCard(final Long id){
+        Optional<Card> card = cardRepository.findById(id);
+        if (card.isPresent()) {
+            Card existingCard = card.get();
+            existingCard.setIsDeleted(true);
+            cardRepository.save(existingCard);
+            return existingCard;
+        }
+        else
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attention : aucune carte n'a été trouvée.");
     }
 
     public Card saveCard(Card card){
