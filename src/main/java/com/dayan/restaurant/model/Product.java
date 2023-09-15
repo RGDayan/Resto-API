@@ -35,6 +35,9 @@ public class Product {
     @JsonView({OrderView.Index.class, ProductView.Index.class})
     public Boolean isActive = true;
 
+    @Column(name = "is_deleted", columnDefinition = "BOOLEAN")
+    private Boolean isDeleted = false;
+
     @ManyToMany
     @JoinTable(name = "card_product", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "card_id"))
     @JsonIgnoreProperties("products")

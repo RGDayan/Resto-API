@@ -31,7 +31,15 @@ public class CardService {
         List<Card> cards = (List<Card>)cardRepository.findAll();
         if (cards.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attention : aucune carte n'a été trouvée.");
-        return cards;
+
+        List<Card> existingCards = new ArrayList<>();
+        for (Card card :
+                cards) {
+            if (!card.getIsDeleted())
+                existingCards.add(card);
+        }
+
+        return existingCards;
     }
 
     public Card deleteCard(final Long id){

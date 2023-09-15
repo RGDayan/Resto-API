@@ -16,14 +16,7 @@ public class CardController {
 
     @GetMapping("/cards")
     public Iterable<Card> getCards(){
-        Iterable<Card> cards = cardService.getCards();
-        List<Card> existingCards = new ArrayList<>();
-        for (Card card :
-                cards) {
-            if (!card.getIsDeleted())
-                existingCards.add(card);
-        }
-        return existingCards;
+        return cardService.getCards();
     }
 
     @GetMapping("/cards/types")
@@ -38,6 +31,11 @@ public class CardController {
 
     @PostMapping("/cards")
     public Card postCard(@RequestBody Card card) {
+        return cardService.saveCard(card);
+    }
+
+    @PutMapping("/cards")
+    public Card putCard(@RequestBody Card card) {
         return cardService.saveCard(card);
     }
 

@@ -1,4 +1,4 @@
-package com.dayan.restaurant.model.heritages.produits;
+package com.dayan.restaurant.model.heritages.products;
 
 import com.dayan.restaurant.model.Product;
 import jakarta.persistence.*;
