@@ -15,6 +15,6 @@ public class Starter {
     @Column(name = "is_hot", columnDefinition = "BOOLEAN", nullable = false)
     private Boolean isHot;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Product product;
 }

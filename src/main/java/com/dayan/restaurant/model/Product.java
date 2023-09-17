@@ -1,7 +1,7 @@
 package com.dayan.restaurant.model;
 
-import com.dayan.restaurant.model.relations.OrderProduct;
-import com.dayan.restaurant.view.OrderView;
+import com.dayan.restaurant.model.relations.CommandProduct;
+import com.dayan.restaurant.view.CommandView;
 import com.dayan.restaurant.view.ProductView;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -17,22 +17,22 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView({OrderView.Index.class, ProductView.Index.class})
+    @JsonView({CommandView.Index.class, ProductView.Index.class})
     public Long id;
 
     @Column(nullable = false)
-    @JsonView({OrderView.Index.class, ProductView.Index.class})
+    @JsonView({CommandView.Index.class, ProductView.Index.class})
     public String label;
 
-    @JsonView({OrderView.Index.class, ProductView.Index.class})
+    @JsonView({CommandView.Index.class, ProductView.Index.class})
     public String description;
 
     @Column(nullable = false)
-    @JsonView({OrderView.Index.class, ProductView.Index.class})
+    @JsonView({CommandView.Index.class, ProductView.Index.class})
     public Double price;
 
     @Column(name = "is_active", columnDefinition = "BOOLEAN", nullable = false)
-    @JsonView({OrderView.Index.class, ProductView.Index.class})
+    @JsonView({CommandView.Index.class, ProductView.Index.class})
     public Boolean isActive = true;
 
     @Column(name = "is_deleted", columnDefinition = "BOOLEAN")
@@ -46,5 +46,5 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     @JsonView(ProductView.Index.class)
-    private List<OrderProduct> orders = new ArrayList<>();
+    private List<CommandProduct> commands = new ArrayList<>();
 }

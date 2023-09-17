@@ -1,8 +1,8 @@
 package com.dayan.restaurant.model.relations;
 
-import com.dayan.restaurant.model.Order;
+import com.dayan.restaurant.model.Command;
 import com.dayan.restaurant.model.Product;
-import com.dayan.restaurant.view.OrderView;
+import com.dayan.restaurant.view.CommandView;
 import com.dayan.restaurant.view.ProductView;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
@@ -13,19 +13,19 @@ import java.util.Objects;
 
 @Data
 @Entity
-@Table(name = "order_product")
-public class OrderProduct {
+@Table(name = "command_product")
+public class CommandProduct {
     @EmbeddedId
-    private OrderProductId id;
+    private CommandProductId id;
 
     @ManyToOne
-    @MapsId("orderId")
+    @MapsId("commandId")
     @JsonView(ProductView.Index.class)
-    private Order order;
+    private Command command;
 
     @ManyToOne
     @MapsId("productId")
-    @JsonView(OrderView.Index.class)
+    @JsonView(CommandView.Index.class)
     private Product product;
 
     @Column(nullable = false)
@@ -44,13 +44,13 @@ public class OrderProduct {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        OrderProduct that = (OrderProduct) o;
-        return Objects.equals(order, that.order) &&
+        CommandProduct that = (CommandProduct) o;
+        return Objects.equals(command, that.command) &&
                 Objects.equals(product, that.product);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(order, product);
+        return Objects.hash(command, product);
     }
 }

@@ -2,6 +2,7 @@ package com.dayan.restaurant.service.heristages.product;
 
 import com.dayan.restaurant.model.heritages.products.Starter;
 import com.dayan.restaurant.repository.heritages.product.StarterRepository;
+import com.dayan.restaurant.service.ProductService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,17 @@ public class StarterService {
 
     @Autowired
     private StarterRepository starterRepository;
+    @Autowired
+    private ProductService productService;
     
     public Optional<Starter> getStarter(final Long id) {
         Optional<Starter> starter = starterRepository.findById(id);
-        if (starter.isPresent() && !starter.get().getProduct().getIsDeleted())
-            return starter;
-        else
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Erreur : enregistrement supprimé");
+        if (starter.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Erreur : enregistrement non-trouvé");
+        if (starter.get().getProduct().getIsDeleted())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erreur : enregistrement supprimé");
+
+        return starter;
     }
 
     public List<Starter> getStarters(){
@@ -55,6 +60,7 @@ public class StarterService {
     }
 
     public Starter saveStarter(Starter starter){
+        productService.saveProduct(starter.getProduct());
         return starterRepository.save(starter);
     }
 }

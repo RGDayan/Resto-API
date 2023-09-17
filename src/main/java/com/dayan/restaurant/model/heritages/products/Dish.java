@@ -12,8 +12,6 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String cooking;
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Product product;
 }

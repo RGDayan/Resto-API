@@ -1,6 +1,6 @@
 package com.dayan.restaurant.model;
 
-import com.dayan.restaurant.view.OrderView;
+import com.dayan.restaurant.view.CommandView;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
@@ -16,23 +16,23 @@ import java.util.List;
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(OrderView.Index.class)
+    @JsonView(CommandView.Index.class)
     private Long id;
 
     @Column(name = "opened_date", nullable = false, columnDefinition = "DATETIME")
-    @JsonView(OrderView.Index.class)
+    @JsonView(CommandView.Index.class)
     private Date openedDate = new Date(System.currentTimeMillis());
 
     @Column(name = "closed_date", columnDefinition = "DATETIME")
-    @JsonView(OrderView.Index.class)
+    @JsonView(CommandView.Index.class)
     private Date closedDate;
 
     @Column(name = "total_amount")
-    @JsonView(OrderView.Index.class)
+    @JsonView(CommandView.Index.class)
     private Double totalAmount;
 
     @Column(columnDefinition = "BOOLEAN", nullable = false)
-    @JsonView(OrderView.Index.class)
+    @JsonView(CommandView.Index.class)
     private Boolean status = true;
 
     @ManyToOne(optional = false)
@@ -41,5 +41,5 @@ public class Service {
 
     @OneToMany(mappedBy = "service")
     @JsonIgnoreProperties("service")
-    private List<Order> orders = new ArrayList<>();
+    private List<Command> commands = new ArrayList<>();
 }

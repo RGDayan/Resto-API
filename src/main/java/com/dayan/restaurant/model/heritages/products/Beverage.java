@@ -18,6 +18,6 @@ public class Beverage {
     @Column(nullable = false)
     private String type;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Product product;
 }

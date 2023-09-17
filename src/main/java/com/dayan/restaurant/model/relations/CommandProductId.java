@@ -9,9 +9,9 @@ import java.util.Objects;
 
 @Data
 @Embeddable
-public class OrderProductId implements Serializable {
-    @Column(name = "order_id")
-    private Long orderId;
+public class CommandProductId implements Serializable {
+    @Column(name = "command_id")
+    private Long commandId;
 
     @Column(name = "product_id")
     private Long productId;
@@ -22,13 +22,13 @@ public class OrderProductId implements Serializable {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        OrderProductId that = (OrderProductId) o;
-        return Objects.equals(orderId, that.orderId) &&
+        CommandProductId that = (CommandProductId) o;
+        return Objects.equals(commandId, that.commandId) &&
                 Objects.equals(productId, that.productId);
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(orderId, productId);
+        return Objects.hash(commandId, productId);
     }
 }
