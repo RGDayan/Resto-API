@@ -4,8 +4,6 @@ import com.dayan.restaurant.model.Service;
 import com.dayan.restaurant.repository.ServiceRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
