@@ -1,7 +1,7 @@
 package com.dayan.restaurant.controller.heritages.products;
 
 import com.dayan.restaurant.model.heritages.products.Dessert;
-import com.dayan.restaurant.service.heristages.product.DessertService;
+import com.dayan.restaurant.service.heritages.product.DessertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

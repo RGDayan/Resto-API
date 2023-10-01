@@ -1,4 +1,4 @@
-package com.dayan.restaurant.service.heristages.product;
+package com.dayan.restaurant.service.heritages.product;
 
 import com.dayan.restaurant.model.heritages.products.Starter;
 import com.dayan.restaurant.repository.heritages.product.StarterRepository;
