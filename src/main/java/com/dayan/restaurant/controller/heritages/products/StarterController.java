@@ -13,26 +13,26 @@ public class StarterController {
     @Autowired
     public StarterService starterService;
 
-    @GetMapping("/products/starters")
+    @GetMapping("/products/starter")
     public Iterable<Starter> getStarters(){
         return starterService.getStarters();
     }
-    @GetMapping("/products/starters/{id}")
+    @GetMapping("/products/starter/{id}")
     public Optional<Starter> getStarter(@PathVariable("id") Long id){
         return starterService.getStarter(id);
     }
     
-    @PostMapping("/products/starters")
+    @PostMapping("/products/starter")
     public Starter postStarter(@RequestBody Starter starter) {
         return starterService.saveStarter(starter);
     }
 
-    @PutMapping("/products/starters")
+    @PutMapping("/products/starter")
     public Starter putStarter(@RequestBody Starter starter) {
         return starterService.saveStarter(starter);
     }
 
-    @DeleteMapping("/products/starters/{id}")
+    @DeleteMapping("/products/starter/{id}")
     public Starter deleteStarter(@PathVariable("id") Long id){
         return starterService.deleteStarter(id);
     }

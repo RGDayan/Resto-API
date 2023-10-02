@@ -13,6 +13,8 @@ import java.util.List;
 
 @Data
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "product_type")
 @Table(name = "product")
 public class Product {
     @Id
@@ -36,15 +38,15 @@ public class Product {
     public Boolean isActive = true;
 
     @Column(name = "is_deleted", columnDefinition = "BOOLEAN")
-    private Boolean isDeleted = false;
+    public Boolean isDeleted = false;
 
     @ManyToMany
     @JoinTable(name = "card_product", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "card_id"))
     @JsonIgnoreProperties("products")
     @JsonView(ProductView.Index.class)
-    private List<Card> cards = new ArrayList<>();
+    public List<Card> cards = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     @JsonView(ProductView.Index.class)
-    private List<CommandProduct> commands = new ArrayList<>();
+    public List<CommandProduct> commands = new ArrayList<>();
 }

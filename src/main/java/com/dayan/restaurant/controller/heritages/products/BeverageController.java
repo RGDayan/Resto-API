@@ -14,30 +14,30 @@ public class BeverageController {
     @Autowired
     public BeverageService beverageService;
 
-    @GetMapping("/products/beverages")
+    @GetMapping("/products/beverage")
     public Iterable<Beverage> getBeverages(){
         return beverageService.getBeverages();
     }
-    @GetMapping("/products/beverages/{id}")
+    @GetMapping("/products/beverage/{id}")
     public Optional<Beverage> getBeverage(@PathVariable("id") Long id){
         return beverageService.getBeverage(id);
     }
-    @GetMapping("/products/beverages/types")
+    @GetMapping("/products/beverage/types")
     public List<String> getCardsType(){
         return beverageService.getBeveragesTypes();
     }
 
-    @PostMapping("/products/beverages")
+    @PostMapping("/products/beverage")
     public Beverage postBeverage(@RequestBody Beverage beverage) {
         return beverageService.saveBeverage(beverage);
     }
 
-    @PutMapping("/products/beverages")
+    @PutMapping("/products/beverage")
     public Beverage putBeverage(@RequestBody Beverage beverage) {
         return beverageService.saveBeverage(beverage);
     }
 
-    @DeleteMapping("/products/beverages/{id}")
+    @DeleteMapping("/products/beverage/{id}")
     public Beverage deleteBeverage(@PathVariable("id") Long id){
         return beverageService.deleteBeverage(id);
     }

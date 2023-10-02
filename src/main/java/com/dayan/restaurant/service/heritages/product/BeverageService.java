@@ -26,7 +26,7 @@ public class BeverageService {
         Optional<Beverage> beverage = beverageRepository.findById(id);
         if (beverage.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Erreur : enregistrement non-trouvé");
-        if (beverage.get().getProduct().getIsDeleted())
+        if (beverage.get().isDeleted)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erreur : enregistrement supprimé");
 
         return beverage;
@@ -40,9 +40,11 @@ public class BeverageService {
         List<Beverage> existingBeverages = new ArrayList<>();
         for (Beverage beverage :
                 beverages) {
-            if (!beverage.getProduct().getIsDeleted())
+            if (!beverage.isDeleted)
                 existingBeverages.add(beverage);
         }
+        if (existingBeverages.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attention : aucune boisson n'a été trouvée.");
 
         return existingBeverages;
     }
@@ -51,7 +53,7 @@ public class BeverageService {
         Optional<Beverage> beverage = beverageRepository.findById(id);
         if (beverage.isPresent()) {
             Beverage existingBeverage = beverage.get();
-            existingBeverage.getProduct().setIsDeleted(true);
+            existingBeverage.isDeleted = true;
             beverageRepository.save(existingBeverage);
             return existingBeverage;
         }
@@ -60,7 +62,7 @@ public class BeverageService {
     }
 
     public Beverage saveBeverage(Beverage beverage){
-        productService.saveProduct(beverage.getProduct());
+        productService.saveProduct(beverage);
         return beverageRepository.save(beverage);
     }
 
@@ -68,8 +70,8 @@ public class BeverageService {
         List<Beverage> beverages = (List<Beverage>) beverageRepository.findAll();
         List<String> types = new ArrayList<>();
         for (Beverage beverage: beverages) {
-            if (!types.contains(beverage.getType()))
-                types.add(beverage.getType());
+            if (!types.contains(beverage.type) && !beverage.isDeleted)
+                types.add(beverage.type);
         }
 
         return types;

@@ -13,26 +13,26 @@ public class DessertController {
     @Autowired
     public DessertService dessertService;
 
-    @GetMapping("/products/desserts")
+    @GetMapping("/products/dessert")
     public Iterable<Dessert> getDesserts(){
         return dessertService.getDesserts();
     }
-    @GetMapping("/products/desserts/{id}")
+    @GetMapping("/products/dessert/{id}")
     public Optional<Dessert> getDessert(@PathVariable("id") Long id){
         return dessertService.getDessert(id);
     }
     
-    @PostMapping("/products/desserts")
+    @PostMapping("/products/dessert")
     public Dessert postDessert(@RequestBody Dessert dessert) {
         return dessertService.saveDessert(dessert);
     }
 
-    @PutMapping("/products/desserts")
+    @PutMapping("/products/dessert")
     public Dessert putDessert(@RequestBody Dessert dessert) {
         return dessertService.saveDessert(dessert);
     }
 
-    @DeleteMapping("/products/desserts/{id}")
+    @DeleteMapping("/products/dessert/{id}")
     public Dessert deleteDessert(@PathVariable("id") Long id){
         return dessertService.deleteDessert(id);
     }

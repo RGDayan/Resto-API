@@ -37,7 +37,7 @@ public class Service {
 
     @ManyToOne(optional = false)
     @JsonIgnoreProperties("services")
-    private Card card;
+    public Card card;
 
     @OneToMany(mappedBy = "service")
     @JsonIgnoreProperties("service")

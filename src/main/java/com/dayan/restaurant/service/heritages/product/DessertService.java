@@ -26,7 +26,7 @@ public class DessertService {
         Optional<Dessert> dessert = dessertRepository.findById(id);
         if (dessert.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Erreur : enregistrement non-trouvé");
-        if (dessert.get().getProduct().getIsDeleted())
+        if (dessert.get().isDeleted)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erreur : enregistrement supprimé");
 
         return dessert;
@@ -40,9 +40,11 @@ public class DessertService {
         List<Dessert> existingDesserts = new ArrayList<>();
         for (Dessert dessert :
                 desserts) {
-            if (!dessert.getProduct().getIsDeleted())
+            if (!dessert.isDeleted)
                 existingDesserts.add(dessert);
         }
+        if (existingDesserts.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attention : aucun dessert n'a été trouvé.");
 
         return existingDesserts;
     }
@@ -51,7 +53,7 @@ public class DessertService {
         Optional<Dessert> dessert = dessertRepository.findById(id);
         if (dessert.isPresent()) {
             Dessert existingDessert = dessert.get();
-            existingDessert.getProduct().setIsDeleted(true);
+            existingDessert.isDeleted = true;
             dessertRepository.save(existingDessert);
             return existingDessert;
         }
@@ -60,7 +62,7 @@ public class DessertService {
     }
 
     public Dessert saveDessert(Dessert dessert){
-        productService.saveProduct(dessert.getProduct());
+        productService.saveProduct(dessert);
         return dessertRepository.save(dessert);
     }
 }

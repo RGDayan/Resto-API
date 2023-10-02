@@ -6,12 +6,10 @@ import lombok.Data;
 
 @Data
 @Entity
+@DiscriminatorValue("dish")
 @Table(name = "dish")
-public class Dish {
+public class Dish extends Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Product product;
 }

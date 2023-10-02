@@ -13,26 +13,26 @@ public class DishController {
     @Autowired
     public DishService dishService;
 
-    @GetMapping("/products/dishes")
+    @GetMapping("/products/dish")
     public Iterable<Dish> getDishes(){
         return dishService.getDishes();
     }
-    @GetMapping("/products/dishes/{id}")
+    @GetMapping("/products/dish/{id}")
     public Optional<Dish> getDish(@PathVariable("id") Long id){
         return dishService.getDish(id);
     }
     
-    @PostMapping("/products/dishes")
+    @PostMapping("/products/dish")
     public Dish postDish(@RequestBody Dish dish) {
         return dishService.saveDish(dish);
     }
 
-    @PutMapping("/products/dishes")
+    @PutMapping("/products/dish")
     public Dish putDish(@RequestBody Dish dish) {
         return dishService.saveDish(dish);
     }
 
-    @DeleteMapping("/products/dishes/{id}")
+    @DeleteMapping("/products/dish/{id}")
     public Dish deleteDish(@PathVariable("id") Long id){
         return dishService.deleteDish(id);
     }

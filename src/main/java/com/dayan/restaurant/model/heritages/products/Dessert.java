@@ -6,8 +6,9 @@ import lombok.Data;
 
 @Data
 @Entity
+@DiscriminatorValue("dessert")
 @Table(name = "dessert")
-public class Dessert {
+public class Dessert extends Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,7 +18,4 @@ public class Dessert {
 
     @Column(name = "is_flambe", columnDefinition = "BOOLEAN", nullable = false)
     private Boolean isFlambe;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Product product;
 }

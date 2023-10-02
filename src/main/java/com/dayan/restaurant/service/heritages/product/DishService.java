@@ -26,7 +26,7 @@ public class DishService {
         Optional<Dish> dish = dishRepository.findById(id);
         if (dish.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Erreur : enregistrement non-trouvé");
-        if (dish.get().getProduct().getIsDeleted())
+        if (dish.get().isDeleted)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erreur : enregistrement supprimé");
 
         return dish;
@@ -40,9 +40,11 @@ public class DishService {
         List<Dish> existingDishes = new ArrayList<>();
         for (Dish dish :
                 dishes) {
-            if (!dish.getProduct().getIsDeleted())
+            if (!dish.isDeleted)
                 existingDishes.add(dish);
         }
+        if (existingDishes.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attention : aucun plat n'a été trouvé.");
 
         return existingDishes;
     }
@@ -51,7 +53,7 @@ public class DishService {
         Optional<Dish> dish = dishRepository.findById(id);
         if (dish.isPresent()) {
             Dish existingDish = dish.get();
-            existingDish.getProduct().setIsDeleted(true);
+            existingDish.isDeleted = true;
             dishRepository.save(existingDish);
             return existingDish;
         }
@@ -60,7 +62,7 @@ public class DishService {
     }
 
     public Dish saveDish(Dish dish){
-        productService.saveProduct(dish.getProduct());
+        productService.saveProduct(dish);
         return dishRepository.save(dish);
     }
 }

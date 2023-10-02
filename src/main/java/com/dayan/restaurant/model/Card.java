@@ -48,21 +48,21 @@ public class Card {
 
     public void addService(Service service){
         services.add(service);
-        service.setCard(this);
+        service.card = this;
     }
 
     public void removeService(Service service){
         services.remove(service);
-        service.setCard(null);
+        service.card = null;
     }
 
     public void addProduct(Product product){
         products.add(product);
-        product.getCards().add(this);
+        product.cards.add(this);
     }
 
     public void removeProduct(Product product){
         products.remove(product);
-        product.getCards().remove(this);
+        product.cards.remove(this);
     }
 }

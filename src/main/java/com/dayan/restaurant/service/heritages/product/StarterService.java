@@ -26,7 +26,7 @@ public class StarterService {
         Optional<Starter> starter = starterRepository.findById(id);
         if (starter.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Erreur : enregistrement non-trouvé");
-        if (starter.get().getProduct().getIsDeleted())
+        if (starter.get().isDeleted)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erreur : enregistrement supprimé");
 
         return starter;
@@ -40,9 +40,11 @@ public class StarterService {
         List<Starter> existingStarters = new ArrayList<>();
         for (Starter starter :
                 starters) {
-            if (!starter.getProduct().getIsDeleted())
+            if (!starter.isDeleted)
                 existingStarters.add(starter);
         }
+        if (existingStarters.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attention : aucune entrée n'a été trouvée.");
 
         return existingStarters;
     }
@@ -51,7 +53,7 @@ public class StarterService {
         Optional<Starter> starter = starterRepository.findById(id);
         if (starter.isPresent()) {
             Starter existingStarter = starter.get();
-            existingStarter.getProduct().setIsDeleted(true);
+            existingStarter.isDeleted = true;
             starterRepository.save(existingStarter);
             return existingStarter;
         }
@@ -60,7 +62,7 @@ public class StarterService {
     }
 
     public Starter saveStarter(Starter starter){
-        productService.saveProduct(starter.getProduct());
+        productService.saveProduct(starter);
         return starterRepository.save(starter);
     }
 }
