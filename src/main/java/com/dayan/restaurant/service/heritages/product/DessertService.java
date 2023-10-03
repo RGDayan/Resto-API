@@ -62,7 +62,6 @@ public class DessertService {
     }
 
     public Dessert saveDessert(Dessert dessert){
-        productService.saveProduct(dessert);
         return dessertRepository.save(dessert);
     }
 }

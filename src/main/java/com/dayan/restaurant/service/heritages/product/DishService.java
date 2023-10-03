@@ -62,7 +62,6 @@ public class DishService {
     }
 
     public Dish saveDish(Dish dish){
-        productService.saveProduct(dish);
         return dishRepository.save(dish);
     }
 }

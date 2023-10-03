@@ -37,6 +37,10 @@ public class Product {
     @JsonView({CommandView.Index.class, ProductView.Index.class})
     public Boolean isActive = true;
 
+    @Column(name = "product_type", insertable = false, updatable = false, nullable = false)
+    @JsonView({CommandView.Index.class, ProductView.Index.class})
+    public String productType;
+
     @Column(name = "is_deleted", columnDefinition = "BOOLEAN")
     public Boolean isDeleted = false;
 

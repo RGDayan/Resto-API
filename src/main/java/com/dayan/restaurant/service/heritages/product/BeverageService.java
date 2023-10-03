@@ -62,7 +62,6 @@ public class BeverageService {
     }
 
     public Beverage saveBeverage(Beverage beverage){
-        productService.saveProduct(beverage);
         return beverageRepository.save(beverage);
     }
 

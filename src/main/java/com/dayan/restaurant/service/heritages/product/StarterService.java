@@ -62,7 +62,6 @@ public class StarterService {
     }
 
     public Starter saveStarter(Starter starter){
-        productService.saveProduct(starter);
         return starterRepository.save(starter);
     }
 }
