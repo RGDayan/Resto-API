@@ -11,10 +11,10 @@ import java.util.Objects;
 @Embeddable
 public class CommandProductId implements Serializable {
     @Column(name = "command_id")
-    private Long commandId;
+    public Long commandId;
 
     @Column(name = "product_id")
-    private Long productId;
+    public Long productId;
 
     @Override
     public boolean equals(Object o){

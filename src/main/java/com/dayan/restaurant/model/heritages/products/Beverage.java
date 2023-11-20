@@ -1,6 +1,8 @@
 package com.dayan.restaurant.model.heritages.products;
 
 import com.dayan.restaurant.model.Product;
+import com.dayan.restaurant.view.ProductView;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,8 +16,10 @@ public class Beverage extends Product {
     public Long id;
 
     @Column(nullable = false)
+    @JsonView({ProductView.Index.class})
     public Double degree;
 
     @Column(nullable = false)
+    @JsonView({ProductView.Index.class})
     public String type;
 }

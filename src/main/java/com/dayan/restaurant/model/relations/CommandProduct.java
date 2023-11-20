@@ -4,11 +4,13 @@ import com.dayan.restaurant.model.Command;
 import com.dayan.restaurant.model.Product;
 import com.dayan.restaurant.view.CommandView;
 import com.dayan.restaurant.view.ProductView;
+import com.dayan.restaurant.view.ServiceView;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Data
@@ -16,26 +18,29 @@ import java.util.Objects;
 @Table(name = "command_product")
 public class CommandProduct {
     @EmbeddedId
-    private CommandProductId id;
+    public CommandProductId id;
 
     @ManyToOne
     @MapsId("commandId")
-    @JsonView(ProductView.Index.class)
-    private Command command;
+    @JsonView({ProductView.Index.class})
+    public Command command;
 
     @ManyToOne
     @MapsId("productId")
-    @JsonView(CommandView.Index.class)
-    private Product product;
+    @JsonView({CommandView.Index.class, ServiceView.ShowCurrent.class})
+    public Product product;
 
     @Column(nullable = false)
-    private Integer quantity = 1;
+    @JsonView({ServiceView.ShowCurrent.class, ProductView.Index.class})
+    public Integer quantity = 1;
 
     @Column(nullable = false)
-    private String status = "ordered";
+    @JsonView({ServiceView.ShowCurrent.class, ProductView.Index.class})
+    public String status = "ordered";
 
     @Column(name = "ordered_hour", nullable = false, columnDefinition = "DATETIME")
-    private Date orderedHour;
+    @JsonView({ServiceView.ShowCurrent.class, ProductView.Index.class})
+    public LocalDateTime orderedHour;
 
     @Override
     public boolean equals(Object o) {

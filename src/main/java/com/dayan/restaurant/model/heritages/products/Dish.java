@@ -11,5 +11,5 @@ import lombok.Data;
 public class Dish extends Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 }

@@ -1,6 +1,8 @@
 package com.dayan.restaurant.model;
 
+import com.dayan.restaurant.view.CardView;
 import com.dayan.restaurant.view.ProductView;
+import com.dayan.restaurant.view.ServiceView;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
@@ -16,35 +18,37 @@ import java.util.List;
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(ProductView.Index.class)
-    private Long id;
+    @JsonView({CardView.Index.class, ProductView.Index.class, ServiceView.Index.class, ServiceView.ShowCurrent.class})
+    public Long id;
 
     @Column(nullable = false)
-    @JsonView(ProductView.Index.class)
-    private String title;
+    @JsonView({CardView.Index.class, ProductView.Index.class, ServiceView.Index.class, ServiceView.ShowCurrent.class})
+    public String title;
 
     @Column(nullable = false)
-    @JsonView(ProductView.Index.class)
-    private String type;
+    @JsonView({CardView.Index.class, ProductView.Index.class, ServiceView.Index.class, ServiceView.ShowCurrent.class})
+    public String type;
 
     @Column(name = "opening_time")
-    @JsonView(ProductView.Index.class)
-    private Time openingTime;
+    @JsonView({CardView.Index.class, ProductView.Index.class, ServiceView.Index.class, ServiceView.ShowCurrent.class})
+    public Time openingTime;
 
     @Column(name = "closing_time")
-    @JsonView(ProductView.Index.class)
-    private Time closingTime;
+    @JsonView({CardView.Index.class, ProductView.Index.class, ServiceView.Index.class, ServiceView.ShowCurrent.class})
+    public Time closingTime;
 
     @Column(name = "is_deleted", columnDefinition = "BOOLEAN")
-    private Boolean isDeleted = false;
+    public Boolean isDeleted = false;
 
     @OneToMany(mappedBy = "card")
     @JsonIgnoreProperties("card")
-    private List<Service> services = new ArrayList<>();
+    @JsonView({CardView.Index.class})
+    public List<Service> services = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "cards")
+    @ManyToMany(mappedBy = "cards", cascade = CascadeType.PERSIST)
     @JsonIgnoreProperties("cards")
-    private List<Product> products = new ArrayList<>();
+    @JsonView({CardView.Index.class, ServiceView.ShowCurrent.class})
+    public List<Product> products = new ArrayList<>();
 
     public void addService(Service service){
         services.add(service);
