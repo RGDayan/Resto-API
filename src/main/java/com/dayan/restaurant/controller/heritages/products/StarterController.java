@@ -2,7 +2,6 @@ package com.dayan.restaurant.controller.heritages.products;
 
 import com.dayan.restaurant.model.heritages.products.Starter;
 import com.dayan.restaurant.service.heritages.product.StarterService;
-import com.dayan.restaurant.view.CardView;
 import com.dayan.restaurant.view.ProductView;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;

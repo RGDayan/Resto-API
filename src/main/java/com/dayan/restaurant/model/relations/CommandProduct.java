@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -17,29 +16,32 @@ import java.util.Objects;
 @Entity
 @Table(name = "command_product")
 public class CommandProduct {
+
     @EmbeddedId
     public CommandProductId id;
 
     @ManyToOne
     @MapsId("commandId")
+    @PrimaryKeyJoinColumn(name = "command_id")
     @JsonView({ProductView.Index.class})
     public Command command;
 
     @ManyToOne
     @MapsId("productId")
+    @PrimaryKeyJoinColumn(name = "product_id")
     @JsonView({CommandView.Index.class, ServiceView.ShowCurrent.class})
     public Product product;
 
     @Column(nullable = false)
-    @JsonView({ServiceView.ShowCurrent.class, ProductView.Index.class})
+    @JsonView({CommandView.Index.class, ServiceView.ShowCurrent.class, ProductView.Index.class})
     public Integer quantity = 1;
 
     @Column(nullable = false)
-    @JsonView({ServiceView.ShowCurrent.class, ProductView.Index.class})
+    @JsonView({CommandView.Index.class, ServiceView.ShowCurrent.class, ProductView.Index.class})
     public String status = "ordered";
 
     @Column(name = "ordered_hour", nullable = false, columnDefinition = "DATETIME")
-    @JsonView({ServiceView.ShowCurrent.class, ProductView.Index.class})
+    @JsonView({CommandView.Index.class, ServiceView.ShowCurrent.class, ProductView.Index.class})
     public LocalDateTime orderedHour;
 
     @Override

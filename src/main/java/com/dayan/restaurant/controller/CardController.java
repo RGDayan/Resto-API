@@ -23,7 +23,6 @@ public class CardController {
     }
 
     @GetMapping("/cards/types")
-    @JsonView({CardView.Index.class})
     public List<String> getCardsType(){
         return cardService.getCardTypes();
     }
@@ -41,11 +40,13 @@ public class CardController {
     }
 
     @PostMapping("/cards")
+    @JsonView({CardView.Index.class})
     public Card postCard(@RequestBody Card card) {
         return cardService.saveCard(card);
     }
 
     @PutMapping("/cards")
+    @JsonView({CardView.Index.class})
     public Card putCard(@RequestBody Card card) {
         return cardService.saveCard(card);
     }

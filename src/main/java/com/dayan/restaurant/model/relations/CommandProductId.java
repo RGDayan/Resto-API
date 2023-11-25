@@ -18,13 +18,10 @@ public class CommandProductId implements Serializable {
 
     @Override
     public boolean equals(Object o){
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        CommandProductId that = (CommandProductId) o;
-        return Objects.equals(commandId, that.commandId) &&
-                Objects.equals(productId, that.productId);
+        if (o instanceof CommandProductId pk) {
+            return Objects.equals(this.commandId, pk.commandId) && Objects.equals(this.productId, pk.productId);
+        }
+        return false;
     }
 
     @Override

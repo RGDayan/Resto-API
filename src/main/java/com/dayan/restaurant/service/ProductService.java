@@ -1,7 +1,6 @@
 package com.dayan.restaurant.service;
 
 import com.dayan.restaurant.model.Product;
-import com.dayan.restaurant.model.heritages.products.Beverage;
 import com.dayan.restaurant.repository.ProductRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

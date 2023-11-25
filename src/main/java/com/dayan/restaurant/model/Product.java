@@ -54,5 +54,6 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     @JsonView(ProductView.Index.class)
-    public List<CommandProduct> commands = new ArrayList<>();
+    public List<CommandProduct> commandProducts = new ArrayList<>();
+
 }
