@@ -109,9 +109,10 @@ public class Command {
     }
 
     public void computeAmount() {
-        amount = 0d;
+        amount = (double) 0;
         for (CommandProduct commandProduct: commandProducts)
             amount += commandProduct.product.price * commandProduct.quantity;
 
+        amount = Math.ceil(amount * 100) / 100;
     }
 }

@@ -3,7 +3,6 @@ package com.dayan.restaurant.service;
 import com.dayan.restaurant.model.Command;
 import com.dayan.restaurant.model.Product;
 import com.dayan.restaurant.model.relations.CommandProduct;
-import com.dayan.restaurant.model.relations.CommandProductId;
 import com.dayan.restaurant.repository.CommandRepository;
 import com.dayan.restaurant.repository.ProductRepository;
 import com.dayan.restaurant.repository.relations.CommandProductRepository;
@@ -13,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Service
@@ -87,10 +83,6 @@ public class CommandService {
         }
         else
             commandProductRepository.save(commandProduct.a);
-
-        for (CommandProduct c: command.commandProducts) {
-            System.out.println("Product : " + c.product.price + " : " + c.quantity + " : Quantity");
-        }
 
         command.computeAmount();
         commandRepository.save(command);
