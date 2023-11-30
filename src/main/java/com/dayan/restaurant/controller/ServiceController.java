@@ -46,6 +46,7 @@ public class ServiceController {
         if (service == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ERREUR : Aucun service actif retrouvé");
 
+        service.commands = service.commands.stream().filter(x -> !x.status).toList();
         return service;
     }
 

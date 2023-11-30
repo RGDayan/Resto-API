@@ -36,6 +36,15 @@ public class CommandProduct {
     @JsonView({CommandView.Index.class, ServiceView.ShowCurrent.class, ProductView.Index.class})
     public Integer quantity = 1;
 
+    @JsonView({CommandView.Index.class, ServiceView.ShowCurrent.class, ProductView.Index.class})
+    public Double priceHT;
+
+    @JsonView({CommandView.Index.class, ServiceView.ShowCurrent.class, ProductView.Index.class})
+    public Double partTVA;
+
+    @JsonView({CommandView.Index.class, ServiceView.ShowCurrent.class, ProductView.Index.class})
+    public Double priceTTC;
+
     @Column(nullable = false)
     @JsonView({CommandView.Index.class, ServiceView.ShowCurrent.class, ProductView.Index.class})
     public String status = "ordered";
@@ -59,5 +68,11 @@ public class CommandProduct {
     @Override
     public int hashCode() {
         return Objects.hash(command, product);
+    }
+
+    public void computePrices(){
+        this.priceHT = Math.ceil(this.product.priceHT * this.quantity * 100) / 100;
+        this.partTVA = Math.ceil(this.product.partTVA * this.quantity * 100) / 100;
+        this.priceTTC = Math.ceil(this.product.priceTTC * this.quantity * 100) / 100;
     }
 }

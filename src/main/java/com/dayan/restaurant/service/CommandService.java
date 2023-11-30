@@ -58,7 +58,7 @@ public class CommandService {
 
         Command c = commandRepository.findById(commandId).orElse(null);
         assert c != null;
-        c.computeAmount();
+        c.computeAmounts();
         commandRepository.save(c);
     }
 
@@ -84,11 +84,31 @@ public class CommandService {
         else
             commandProductRepository.save(commandProduct.a);
 
-        command.computeAmount();
+        command.computeAmounts();
         commandRepository.save(command);
+    }
+
+    public void askProductCategory(Long id, String productType) {
+        Command command = commandRepository.findById(id).orElse(null);
+        assert command != null;
+
+        for (CommandProduct commandProduct: command.commandProducts) {
+            if (commandProduct.product.productType.equals(productType)){
+                commandProduct.status = "asked";
+                commandProductRepository.save(commandProduct);
+            }
+        }
     }
 
     public void deleteCommand(final Long id) {
         commandRepository.deleteById(id);
+    }
+
+    public void closeCommand(Long id, String reason) {
+        Command command = commandRepository.findById(id).orElse(null);
+        assert command != null;
+        command.status = true;
+        command.closingReason = reason;
+        commandRepository.save(command);
     }
 }

@@ -1,10 +1,11 @@
 package com.dayan.restaurant.controller;
 
 import com.dayan.restaurant.model.Command;
+import com.dayan.restaurant.model.Service;
 import com.dayan.restaurant.service.CommandService;
 import com.dayan.restaurant.view.CommandView;
+import com.dayan.restaurant.view.ServiceView;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.ObjectReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,8 @@ import java.time.LocalDateTime;
 public class CommandController {
     @Autowired
     private CommandService commandService;
+    @Autowired
+    private ServiceController serviceController;
 
     @GetMapping("/commands")
     @JsonView(CommandView.Index.class)
@@ -55,14 +58,24 @@ public class CommandController {
     }
 
     @PostMapping("/commands/{idCommand}/products/{idProduct}")
-    @JsonView({CommandView.Index.class})
     public void postCommandProduct(@PathVariable("idCommand") Long commandId, @PathVariable("idProduct") Long productId){
         commandService.addCommandProduct(commandId, productId);
     }
 
     @PutMapping("/commands/{idCommand}/products/{idProduct}")
-    @JsonView({CommandView.Index.class})
     public void reduceCommandProduct(@PathVariable("idCommand") Long commandId, @PathVariable("idProduct") Long productId){
         commandService.reduceCommandProduct(commandId, productId);
+    }
+
+    @PutMapping("/commands/{id}/{productType}")
+    public void askCommandProduct(@PathVariable("id") Long id, @PathVariable("productType") String productType) {
+        commandService.askProductCategory(id, productType);
+    }
+
+    @DeleteMapping("/commands/{id}/pay")
+    @JsonView({ServiceView.ShowCurrent.class})
+    public Service closeCommand(@PathVariable("id") Long id) {
+        commandService.closeCommand(id, "payé");
+        return serviceController.getCurrentService();
     }
 }

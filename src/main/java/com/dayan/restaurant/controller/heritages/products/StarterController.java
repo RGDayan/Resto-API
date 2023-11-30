@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 public class StarterController {
 
@@ -22,7 +20,7 @@ public class StarterController {
     }
     @GetMapping("/products/starter/{id}")
     @JsonView({ProductView.Index.class})
-    public Optional<Starter> getStarter(@PathVariable("id") Long id){
+    public Starter getStarter(@PathVariable("id") Long id){
         return starterService.getStarter(id);
     }
     

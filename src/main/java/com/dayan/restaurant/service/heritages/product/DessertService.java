@@ -3,6 +3,7 @@ package com.dayan.restaurant.service.heritages.product;
 import com.dayan.restaurant.model.heritages.products.Dessert;
 import com.dayan.restaurant.repository.heritages.product.DessertRepository;
 import com.dayan.restaurant.service.ProductService;
+import com.dayan.restaurant.tools.ProductTools;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,8 @@ public class DessertService {
     private DessertRepository dessertRepository;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductTools productTools;
     
     public Optional<Dessert> getDessert(final Long id) {
         Optional<Dessert> dessert = dessertRepository.findById(id);
@@ -62,6 +65,7 @@ public class DessertService {
     }
 
     public Dessert saveDessert(Dessert dessert){
+        productTools.computeProductPrices(dessert);
         return dessertRepository.save(dessert);
     }
 }

@@ -26,7 +26,10 @@ public class Command {
     public Long id;
 
     @JsonView({CommandView.Index.class, ProductView.Index.class, ServiceView.Index.class, ServiceView.ShowCurrent.class, CardView.Index.class})
-    public Double amount = 0d;
+    public Double priceHT = 0d;
+
+    @JsonView({CommandView.Index.class, ProductView.Index.class, ServiceView.Index.class, ServiceView.ShowCurrent.class, CardView.Index.class})
+    public Double priceTTC = 0d;
 
     @Column(name = "num_table", nullable = false)
     @JsonView({CommandView.Index.class, ProductView.Index.class, ServiceView.Index.class, ServiceView.ShowCurrent.class, CardView.Index.class})
@@ -40,12 +43,16 @@ public class Command {
     @JsonView({CommandView.Index.class, ProductView.Index.class, ServiceView.Index.class, ServiceView.ShowCurrent.class, CardView.Index.class})
     public Boolean status = false;
 
+    @Column(name = "closing_reason")
+    @JsonView({CommandView.Index.class, ProductView.Index.class, ServiceView.Index.class, ServiceView.ShowCurrent.class, CardView.Index.class})
+    public String closingReason;
+
     @Column(name = "created_at", columnDefinition = "DATETIME", nullable = false)
     @JsonView({CommandView.Index.class, ServiceView.ShowCurrent.class, CardView.Index.class})
     public LocalDateTime createdAt;
 
     @ManyToOne(optional = false)
-    @JsonIgnoreProperties("commands")
+    @JsonIgnoreProperties(value = "commands", allowSetters = true)
     @JsonView(CommandView.Index.class)
     public Service service;
 
@@ -73,11 +80,13 @@ public class Command {
             commandProduct.status = "ordered";
             commandProduct.orderedHour = LocalDateTime.now();
             commandProduct.quantity = 1;
+            commandProduct.computePrices();
 
             commandProduct.id = commandProductId;
             this.commandProducts.add(commandProduct);
         } else {
             commandProduct.quantity += 1;
+            commandProduct.computePrices();
         }
 
         return commandProduct;
@@ -98,6 +107,7 @@ public class Command {
             pair = new Pair<>(commandProduct, "remove");
         else {
             commandProduct.quantity -= 1;
+            commandProduct.computePrices();
             pair = new Pair<>(commandProduct, "reduce");
         }
 
@@ -108,11 +118,14 @@ public class Command {
         this.commandProducts.removeIf(x -> x.product.id.equals(product.id));
     }
 
-    public void computeAmount() {
-        amount = (double) 0;
-        for (CommandProduct commandProduct: commandProducts)
-            amount += commandProduct.product.price * commandProduct.quantity;
-
-        amount = Math.ceil(amount * 100) / 100;
+    public void computeAmounts() {
+        this.priceHT = (double) 0;
+        this.priceTTC = (double) 0;
+        for (CommandProduct commandProduct: commandProducts) {
+            this.priceHT += commandProduct.product.priceHT * commandProduct.quantity;
+            this.priceTTC += commandProduct.product.priceTTC * commandProduct.quantity;
+        }
+        this.priceHT = Math.ceil(priceHT * 100) / 100;
+        this.priceTTC = Math.ceil(priceTTC * 100) / 100;
     }
 }

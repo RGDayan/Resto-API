@@ -31,9 +31,17 @@ public class Product {
     @JsonView({CommandView.Index.class, ProductView.Index.class, ServiceView.ShowCurrent.class, CardView.Index.class})
     public String description;
 
-    @Column(nullable = false)
+    @Column(name = "price_ht", nullable = false)
     @JsonView({CommandView.Index.class, ProductView.Index.class, ServiceView.ShowCurrent.class, CardView.Index.class})
-    public Double price;
+    public Double priceHT;
+
+    @Column(name = "part_tva", nullable = false)
+    @JsonView({CommandView.Index.class, ProductView.Index.class, ServiceView.ShowCurrent.class, CardView.Index.class})
+    public Double partTVA;
+
+    @Column(name = "price_ttc", nullable = false)
+    @JsonView({CommandView.Index.class, ProductView.Index.class, ServiceView.ShowCurrent.class, CardView.Index.class})
+    public Double priceTTC;
 
     @Column(name = "is_active", columnDefinition = "BOOLEAN", nullable = false)
     @JsonView({CommandView.Index.class, ProductView.Index.class, ServiceView.ShowCurrent.class, CardView.Index.class})
@@ -45,6 +53,11 @@ public class Product {
 
     @Column(name = "is_deleted", columnDefinition = "BOOLEAN")
     public Boolean isDeleted = false;
+
+    @ManyToOne(optional = false)
+    @JsonIgnoreProperties("products")
+    @JsonView({ProductView.Index.class, CardView.Index.class, CommandView.Index.class})
+    public RatingTVA ratingTVA;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "card_product", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "card_id"))
